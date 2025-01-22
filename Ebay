@@ -1,0 +1,32 @@
+*** Settings ***
+Library SeleniumLibrary
+Library OperatingSystem
+
+
+*** Variables ***
+${LoginURL} https://www.ebay.com/
+${BROWSER} chrome
+${Chrome_driver} C:/Users/SD96730/Downloads/docg-sanity/chromedriver-win64/chromedriver-win64/chromedriver.exe
+${XPATH} (//input)[1]
+${Type} Book
+
+*** Test Cases ***
+Login to Portal
+Open Browser ${LoginURL} ${BROWSER} executable_path=${Chrome_driver}
+Maximize Browser Window
+Sleep 10s
+Click Element xpath=//button[@id='gdpr-banner-accept']
+Wait Until Page Contains Element xpath=(//input)[1] timeout=10s
+Click Element xpath=//button[@id='gdpr-banner-accept']
+Click Element xpath=(//input)[1]
+Input Text ${XPATH} ${Type}
+Sleep 5s
+Click Element xpath=//button[@id='gh-search-btn']/span
+Sleep 5s
+Click Element xpath=//ul/li/div/div[2]/a/div/span
+Sleep 10s
+Wait Until Page Contains Element id=atcRedesignId_btn
+Click Button id=atcRedesignId_btn
+Sleep 5s
+Wait Until Page Contains Element    id=gh-cart-n
+${cart_count}=    Get Text    id=gh-cart-n
